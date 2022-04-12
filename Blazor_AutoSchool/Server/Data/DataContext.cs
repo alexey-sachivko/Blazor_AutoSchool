@@ -26,5 +26,38 @@ public class DataContext : DbContext
             .HasOne(e => e.Group)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Employee>().HasData(
+            new Employee
+            {
+                Id = 1,
+                Surname = "John",
+                Name = " Joe",
+                ThirdName = "Adam",
+                Birthday = new DateTime(1982, 01, 10),
+                Address = "1600 Pennsylvania Avenue NW, Washington, DC 20500",
+                Role = "Admin",
+                Passport = "31195855",
+                Contact = "1-891-456-3476",
+                Username = "admin",
+                PasswordHash = new byte[] {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20},
+                PasswordSalt = new byte[] {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20}
+            }
+        );
+
+        modelBuilder.Entity<Auto>().HasData(
+            new Auto
+            {
+                Id = 1,
+                Brand = "BMW",
+                Model = "3 Series",
+                Color = "Black",
+                RegistrationNumber = "3YU-89I",
+                Type = "Passenger Car",
+                YearOfManufacture = "2020",
+                Status = "In action",
+                EmployeeId = 1
+            }
+        );
     }
 }

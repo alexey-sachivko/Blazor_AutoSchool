@@ -7,7 +7,7 @@ public class Auto
     public string Model { get; set; } = String.Empty;
     public string RegistrationNumber { get; set; } = String.Empty;
     public string Color { get; set; } = String.Empty;
-    public string DateOfManufacture { get; set; } = String.Empty;
+    public string YearOfManufacture { get; set; } = String.Empty;
     public string Status { get; set; } = String.Empty;
     public string Type { get; set; } = String.Empty;
 
