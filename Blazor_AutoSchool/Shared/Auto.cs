@@ -1,4 +1,6 @@
-﻿namespace Blazor_AutoSchool.Shared;
+﻿using System.Text.Json.Serialization;
+
+namespace Blazor_AutoSchool.Shared;
 
 public class Auto
 {
@@ -13,6 +15,7 @@ public class Auto
 
     public List<Student> Students { get; set; } = new List<Student>();
     
+    [JsonIgnore]
     public Employee? Employee { get; set; }
     public int EmployeeId { get; set; }
 }
