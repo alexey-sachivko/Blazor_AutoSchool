@@ -1,3 +1,4 @@
+global using Blazor_AutoSchool.Shared;
 using Blazor_AutoSchool.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
