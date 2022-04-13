@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@inject ILocalStorageService LocalStorage
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
@@ -7,7 +10,15 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <button class="btn btn-link" @onclick="@Logout">Logout</button>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="login">Login</a>
+                </NotAuthorized>
+            </AuthorizeView>
+            
         </div>
 
         <article class="content px-4">
@@ -15,3 +26,14 @@
         </article>
     </main>
 </div>
+
+@code {
+
+    private async Task Logout()
+    {
+        await LocalStorage.RemoveItemAsync("authToken");
+        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("");
+    }
+
+}

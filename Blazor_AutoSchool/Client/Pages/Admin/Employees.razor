@@ -13,14 +13,14 @@ else
 {
     <table class="table table-hover">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Birthday</th>
-                <th>Role</th>
-                <th>Username</th>
-                <th>Autos</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Name</th>
+            <th>Birthday</th>
+            <th>Role</th>
+            <th>Username</th>
+            <th>Autos</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         @foreach (var employee in EmployeeService.Employees)
@@ -50,6 +50,9 @@ else
         }
         </tbody>
     </table>
+    <a href="employee/add" class="btn btn-success">
+        <i class="oi oi-plus"></i> Add Employee
+    </a>
 }
 
 @code {

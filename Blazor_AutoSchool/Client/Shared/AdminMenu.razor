@@ -1,0 +1,31 @@
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+@using System.Security.Claims
+
+@if (authorized)
+{
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="employees">
+            <span class="oi oi-people" aria-hidden="true"></span> Employees
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="autos">
+            <span class="oi oi-compass" aria-hidden="true"></span> Autos
+        </NavLink>
+    </div>
+}
+
+@code {
+    bool authorized = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string role = (await AuthenticationStateProvider.GetAuthenticationStateAsync())
+            .User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+
+        if (role.Contains("Admin"))
+        {
+            authorized = true;
+        }
+    }
+}

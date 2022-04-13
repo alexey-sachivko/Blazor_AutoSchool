@@ -1,0 +1,74 @@
+﻿@page "/employee/add"
+@inject IAutoService AutoService
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Add Employee</PageTitle>
+
+<h1>Enter information about employee</h1>
+
+<div class="container">
+    <div class="row">
+        <EditForm Model="user" OnValidSubmit="CreateEmployee">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label for="surname" class="form-label">Surname</label>
+                <InputText @bind-Value="user.Surname" class="form-control" id="surname"/>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <InputText @bind-Value="user.Name" class="form-control" id="name"/>
+            </div>
+            <div class="mb-3">
+                <label for="third_name" class="form-label">Third name</label>
+                <InputText @bind-Value="user.ThirdName" class="form-control" id="third_name"/>
+            </div>
+            <div class="mb-3">
+                <label for="birthday" class="form-label">Birthday</label>
+                <InputDate @bind-Value="user.Birthday" id="birthday"/>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <InputText @bind-Value="user.Address" class="form-control" id="address"/>
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <InputText @bind-Value="user.Role" class="form-control" id="role"/>
+            </div>
+            <div class="mb-3">
+                <label for="passport" class="form-label">Passport Info</label>
+                <InputText @bind-Value="user.Passport" class="form-control" id="passport"/>
+            </div>
+            <div class="mb-3">
+                <label for="contact" class="form-label">Contact Info</label>
+                <InputText @bind-Value="user.Contact" class="form-control" id="contact"/>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <InputText @bind-Value="user.Username" class="form-control" id="username"/>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <InputText @bind-Value="user.Password" type="password" class="form-control" id="password"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+            <ValidationSummary />
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    UserRegister user = new UserRegister();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AutoService.GetAutos();
+    }
+
+    async void CreateEmployee()
+    {
+        var result = await AuthService.Register(user);
+        NavigationManager.NavigateTo($"employee/{result}");
+    }
+
+}
