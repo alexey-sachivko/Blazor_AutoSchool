@@ -1,6 +1,4 @@
-﻿using System.Net.Http.Json;
-
-namespace Blazor_AutoSchool.Client.Services.EmployeeService;
+﻿namespace Blazor_AutoSchool.Client.Services.EmployeeService;
 
 public class EmployeeService : IEmployeeService
 {
@@ -12,7 +10,7 @@ public class EmployeeService : IEmployeeService
     }
 
     public List<Employee> Employees { get; set; }
-    public string Message { get; set; } = "Loading employees ...";
+    public string Message { get; set; } = "Loading employees...";
     
     public async Task GetEmployees()
     {

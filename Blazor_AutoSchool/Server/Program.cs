@@ -2,6 +2,7 @@ global using Blazor_AutoSchool.Shared;
 global using Blazor_AutoSchool.Server.Data;
 global using Microsoft.EntityFrameworkCore;
 global using Blazor_AutoSchool.Server.Services.EmployeeService;
+global using Blazor_AutoSchool.Server.Services.AutoService;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IAutoService, AutoService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,54 @@
+﻿@page "/autos"
+@inject IAutoService AutoService
+
+<PageTitle>Autos</PageTitle>
+
+<h1>Autos</h1>
+
+@if (AutoService.Autos == null)
+{
+    <h4>@AutoService.Message</h4>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Year of manufacturing</th>
+            <th>Registration Number</th>
+            <th>Color</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var auto in AutoService.Autos)
+        {
+            <tr>
+                <td>@auto.Brand</td>
+                <td>@auto.Model</td>
+                <td>@auto.YearOfManufacture</td>
+                <td>@auto.RegistrationNumber</td>
+                <td>@auto.Color</td>
+                <td>@auto.Type</td>
+                <td>@auto.Status</td>
+                <td>
+                    <a href="/auto/@auto.Id">Details</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AutoService.GetAutos();
+    }
+
+}

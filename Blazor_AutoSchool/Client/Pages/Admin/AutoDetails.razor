@@ -1,0 +1,105 @@
+﻿@page "/auto/{id:int}"
+@inject IAutoService AutoService
+
+<PageTitle>Details</PageTitle>
+
+@if (_auto == null)
+{
+    <h3>@_message</h3>
+}
+else
+{
+    <h1>Information</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="mb-3">
+                        <label for="brand" class="form-label">Brand</label>
+                        <input @bind="@_auto.Brand" type="text" class="form-control" id="brand" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="model" class="form-label">Model</label>
+                        <input @bind="@_auto.Model" type="text" class="form-control" id="model" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="year_of_manufacture" class="form-label">Year of manufacture</label>
+                        <input @bind="@_auto.YearOfManufacture" type="text" class="form-control" id="year_of_manufacture" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registration_number" class="form-label">Registration number</label>
+                        <input @bind="@_auto.RegistrationNumber" type="text" class="form-control" id="registration_number" disabled/>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <form>
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color</label>
+                        <input @bind="@_auto.Color" type="text" class="form-control" id="color" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type</label>
+                        <input @bind="@_auto.Type" type="text" class="form-control" id="type" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <input @bind="@_auto.Status" type="text" class="form-control" id="status" disabled/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Students</h3>
+                @if (_auto.Students.Count > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var student in _auto.Students)
+                        {
+                            <li class="list-group-item">
+                                @GetFullName(student.Surname, student.Name, student.ThirdName) | Group #@student.Group.GroupNumber
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <h4>No students found</h4>
+                }
+                
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Auto? _auto = null;
+    string _message = String.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _message = "Loading auto...";
+
+        var result = await AutoService.GetAuto(Id);
+        
+        if (!result.Success)
+        {
+            _message = result.Message;
+        }
+        else
+        {
+            _auto = result.Data;
+        }
+    }
+    
+    string GetFullName(string surname, string name, string thirdName)
+    {
+        return $"{surname} {name} {thirdName}";
+    }
+
+}
