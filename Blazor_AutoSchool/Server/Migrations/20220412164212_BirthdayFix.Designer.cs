@@ -4,6 +4,7 @@ using Blazor_AutoSchool.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blazor_AutoSchool.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220412164212_BirthdayFix")]
+    partial class BirthdayFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,30 +92,9 @@ namespace Blazor_AutoSchool.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "A"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "B"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "C"
-                        });
                 });
 
             modelBuilder.Entity("Blazor_AutoSchool.Shared.Driving", b =>
@@ -229,7 +210,7 @@ namespace Blazor_AutoSchool.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -254,18 +235,6 @@ namespace Blazor_AutoSchool.Server.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Groups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 2,
-                            Description = "Example text.",
-                            EmployeeId = 1,
-                            EndDate = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            GroupNumber = 1,
-                            StartDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Blazor_AutoSchool.Shared.Lesson", b =>
@@ -458,19 +427,15 @@ namespace Blazor_AutoSchool.Server.Migrations
 
             modelBuilder.Entity("Blazor_AutoSchool.Shared.Group", b =>
                 {
-                    b.HasOne("Blazor_AutoSchool.Shared.Category", "Category")
+                    b.HasOne("Blazor_AutoSchool.Shared.Category", null)
                         .WithMany("Groups")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("Blazor_AutoSchool.Shared.Employee", "Employee")
                         .WithMany("Groups")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("Employee");
                 });

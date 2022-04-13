@@ -4,7 +4,7 @@
 
 namespace Blazor_AutoSchool.Server.Migrations
 {
-    public partial class BirthdayAnnotation : Migration
+    public partial class BirthdayFix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

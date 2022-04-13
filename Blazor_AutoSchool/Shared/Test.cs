@@ -1,4 +1,6 @@
-﻿namespace Blazor_AutoSchool.Shared;
+﻿using System.Text.Json.Serialization;
+
+namespace Blazor_AutoSchool.Shared;
 
 public class Test
 {
@@ -6,6 +8,7 @@ public class Test
     public DateTime Date { get; set; } = DateTime.Now;
     public bool Result { get; set; } = false;
     
+    [JsonIgnore]
     public Student? Student { get; set; }
     public int StudentId { get; set; }
     

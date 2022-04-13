@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blazor_AutoSchool.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220412162810_BirthdayAnnotation")]
-    partial class BirthdayAnnotation
+    [Migration("20220412181648_Categories")]
+    partial class Categories
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,9 +92,30 @@ namespace Blazor_AutoSchool.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "A"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "B"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "C"
+                        });
                 });
 
             modelBuilder.Entity("Blazor_AutoSchool.Shared.Driving", b =>
@@ -210,7 +231,7 @@ namespace Blazor_AutoSchool.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -427,15 +448,19 @@ namespace Blazor_AutoSchool.Server.Migrations
 
             modelBuilder.Entity("Blazor_AutoSchool.Shared.Group", b =>
                 {
-                    b.HasOne("Blazor_AutoSchool.Shared.Category", null)
+                    b.HasOne("Blazor_AutoSchool.Shared.Category", "Category")
                         .WithMany("Groups")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Blazor_AutoSchool.Shared.Employee", "Employee")
                         .WithMany("Groups")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Employee");
                 });

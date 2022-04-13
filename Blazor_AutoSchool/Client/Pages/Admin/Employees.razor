@@ -1,0 +1,62 @@
+﻿@page "/employees"
+@inject IEmployeeService EmployeeService
+
+<PageTitle>Employees</PageTitle>
+
+<h1>Employees</h1>
+
+@if (EmployeeService.Employees == null)
+{
+    <h4>@EmployeeService.Message</h4>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Birthday</th>
+                <th>Role</th>
+                <th>Username</th>
+                <th>Autos</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var employee in EmployeeService.Employees)
+        {
+            <tr>
+                <td>@employee.Surname @employee.Name @employee.ThirdName</td>
+                <td>@employee.Birthday</td>
+                <td>@employee.Role</td>
+                <td>@employee.Username</td>
+                <td>
+                    @if (employee.Autos.Count != 0)
+                    {
+                        @foreach (var employeeAutos in employee.Autos)
+                        {
+                            <span>@employeeAutos.Brand @employeeAutos.Model</span>
+                        } 
+                    }
+                    else
+                    {
+                        <span>No auto</span>
+                    }
+                </td>
+                <td>
+                    <a href="/employee/@employee.Id">Details</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await EmployeeService.GetEmployees();
+    }
+
+}

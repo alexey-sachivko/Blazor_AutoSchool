@@ -1,4 +1,6 @@
-﻿namespace Blazor_AutoSchool.Shared;
+﻿using System.Text.Json.Serialization;
+
+namespace Blazor_AutoSchool.Shared;
 
 public class Driving
 {
@@ -8,6 +10,7 @@ public class Driving
     public string StartPoint { get; set; } = String.Empty;
     public string EndPoint { get; set; } = String.Empty;
     
+    [JsonIgnore]
     public Student? Student { get; set; }
     public int StudentId { get; set; }
 }

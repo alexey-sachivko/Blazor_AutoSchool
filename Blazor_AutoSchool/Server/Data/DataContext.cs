@@ -59,5 +59,35 @@ public class DataContext : DbContext
                 EmployeeId = 1
             }
         );
+
+        modelBuilder.Entity<Category>().HasData(
+            new Category
+            {
+                Id = 1,
+                Name = "A"
+            },
+            new Category{
+                Id = 2,
+                Name = "B"
+            },
+            new Category
+            {
+                Id = 3,
+                Name = "C"
+            }
+        );
+
+        modelBuilder.Entity<Group>().HasData(
+            new Group
+            {
+                Id = 1,
+                GroupNumber = 1,
+                StartDate = new DateTime(2022, 01, 01),
+                EndDate = new DateTime(2022, 04, 01),
+                Description = "Example text.",
+                EmployeeId = 1,
+                CategoryId = 2
+            }
+        );
     }
 }

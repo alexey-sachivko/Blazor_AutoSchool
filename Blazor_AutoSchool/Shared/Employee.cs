@@ -8,8 +8,7 @@ public class Employee
     public string Surname { get; set; } = String.Empty;
     public string Name { get; set; } = String.Empty;
     public string ThirdName { get; set; } = String.Empty;
-    [DataType(DataType.Date)]
-    public DateTime Birthday { get; set; } = DateTime.Now;
+    public DateTime Birthday { get; set; } = DateTime.Now.Date;
     public string Address { get; set; } = String.Empty;
     public string Role { get; set; } = "Admin";
     public string Passport { get; set; } = String.Empty;

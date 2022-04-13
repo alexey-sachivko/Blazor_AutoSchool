@@ -28,6 +28,7 @@ public class EmployeeService : IEmployeeService
         var employee = await _context.Employees
             .Include(e => e.Autos)
             .Include(e => e.Groups)
+                .ThenInclude(g => g.Category)
             .FirstOrDefaultAsync(e => e.Id == employeeId);
 
         if (employee == null)

@@ -1,0 +1,119 @@
+﻿@page "/employee/{id:int}"
+@inject IEmployeeService EmployeeService
+
+<PageTitle>Details</PageTitle>
+
+@if (_employee == null)
+{
+    <h3>@_message</h3>
+}
+else
+{
+    <h1>Information</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname</label>
+                        <input @bind="@_employee.Surname" type="text" class="form-control" id="surname" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input @bind="@_employee.Name" type="text" class="form-control" id="name" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="third_name" class="form-label">Third name</label>
+                        <input @bind="@_employee.ThirdName" type="text" class="form-control" id="third_name" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="birthday" class="form-label">Birthday</label>
+                        <input @bind="@_employee.Birthday" type="date" class="form-control" id="birthday" disabled/>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <form>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input @bind="@_employee.Address" type="text" class="form-control" id="address" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <input @bind="@_employee.Role" type="text" class="form-control" id="role" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="passport" class="form-label">Passport Info</label>
+                        <input @bind="@_employee.Passport" type="text" class="form-control" id="passport" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact Info</label>
+                        <input @bind="@_employee.Contact" type="text" class="form-control" id="contact" disabled/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Autos</h3>
+                @if (_employee.Autos.Count > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var auto in _employee.Autos)
+                        {
+                            <li class="list-group-item">@auto.Brand @auto.Model @auto.RegistrationNumber</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <h4>No autos found</h4>
+                }
+                
+            </div>
+            <div class="col">
+                <h3>Groups</h3>
+                @if (_employee.Groups.Count > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var group in _employee.Groups)
+                        {
+                            <li class="list-group-item">@group.GroupNumber | Category: @group.Category.Name</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <h4>No groups found</h4>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    Employee? _employee = null;
+    string _message = String.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _message = "Loading employee info...";
+
+        var result = await EmployeeService.GetEmployee(Id);
+
+        if (!result.Success)
+        {
+            _message = result.Message;
+        }
+        else
+        {
+            _employee = result.Data;
+        }
+    }
+
+}

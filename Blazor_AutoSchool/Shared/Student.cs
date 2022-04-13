@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Blazor_AutoSchool.Shared;
 
@@ -9,7 +10,7 @@ public class Student
     public string Name { get; set; } = String.Empty;
     public string ThirdName { get; set; } = String.Empty;
     [DataType(DataType.Date)]
-    public DateTime Birthday { get; set; } = DateTime.Now;
+    public DateTime Birthday { get; set; } = DateTime.Now.Date;
     public string Address { get; set; } = String.Empty;
     public string Passport { get; set; } = String.Empty;
     public string Contact { get; set; } = String.Empty;
