@@ -3,6 +3,7 @@ global using System.Net.Http.Json;
 global using Blazor_AutoSchool.Client.Services.EmployeeService;
 global using Blazor_AutoSchool.Client.Services.AutoService;
 global using Blazor_AutoSchool.Client.Services.AuthService;
+global using Blazor_AutoSchool.Client.Services.GroupService;
 using Blazor_AutoSchool.Client;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -19,6 +20,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAutoService, AutoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

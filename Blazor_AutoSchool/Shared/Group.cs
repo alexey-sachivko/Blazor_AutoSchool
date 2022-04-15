@@ -10,12 +10,12 @@ public class Group
     public DateTime EndDate { get; set; } = DateTime.Now.Date.AddMonths(3);
     public string? Description { get; set; }
     
-    [JsonIgnore]
     public Employee? Employee { get; set; }
-    public int EmployeeId { get; set; }
+    public int? EmployeeId { get; set; }
     
-    public Category? Category { get; set; }
+    public Category Category { get; set; }
     public int CategoryId { get; set; }
 
-    public List<Schedule> Schedule { get; set; } = new List<Schedule>();
+    public List<Schedule> Schedules { get; set; } = new List<Schedule>();
+    public List<Student> Students { get; set; } = new List<Student>();
 }

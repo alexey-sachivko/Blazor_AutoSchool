@@ -1,0 +1,109 @@
+﻿@page "/group/{id:int}"
+@inject IGroupService GroupService
+
+<PageTitle>Details</PageTitle>
+
+@if (_group == null)
+{
+    <h3>@_message</h3>
+}
+else
+{
+    <h1>Information</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="mb-3">
+                        <label for="group_number" class="form-label">Group Number</label>
+                        <input @bind="@_group.GroupNumber" type="text" class="form-control" id="group_number" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input @bind="@_group.StartDate" type="date" class="form-control" id="start_date" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input @bind="@_group.EndDate" type="date" class="form-control" id="end_date" disabled/>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <form>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input @bind="@_group.Description" type="text" class="form-control" id="description" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee" class="form-label">Assinged employee</label>
+                        <input value="@_group.Employee.Surname @_group.Employee.Name @_group.Employee.ThirdName" type="text" class="form-control" id="employee" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input @bind="@_group.Category.Name" type="text" class="form-control" id="category" disabled/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Students</h3>
+                @if (_group.Students.Count > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var student in _group.Students)
+                        {
+                            <li class="list-group-item">@student.Surname @student.Name @student.ThirdName</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <h4>No students found</h4>
+                }
+                
+            </div>
+            <div class="col">
+                <h3>Schedule</h3>
+                @if (_group.Schedules.Count > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var schedule in _group.Schedules)
+                        {
+                            <li class="list-group-item">@schedule.Time | @schedule.DayOfWeek</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <h4>No schedule found</h4>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    
+    Group? _group = null;
+    string _message = String.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _message = "Loading group info...";
+
+        var result = await GroupService.GetGroup(Id);
+
+        if (!result.Success)
+        {
+            _message = result.Message;
+        }
+        else
+        {
+            _group = result.Data;
+        }
+    }
+}

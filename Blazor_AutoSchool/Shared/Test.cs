@@ -8,10 +8,8 @@ public class Test
     public DateTime Date { get; set; } = DateTime.Now;
     public bool Result { get; set; } = false;
     
-    [JsonIgnore]
-    public Student? Student { get; set; }
+    public Student Student { get; set; }
     public int StudentId { get; set; }
-    
-    public Topic? Topic { get; set; }
+    public Topic Topic { get; set; }
     public int TopicId { get; set; }
 }

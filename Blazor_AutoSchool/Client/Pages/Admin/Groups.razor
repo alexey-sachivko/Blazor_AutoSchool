@@ -1,0 +1,75 @@
+﻿@page "/groups"
+@inject IGroupService GroupService
+
+<PageTitle>Groups</PageTitle>
+
+<h1>Groups</h1>
+
+@if (GroupService.Groups == null)
+{
+    <h4>@GroupService.Message</h4>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Group Number</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Assigned employee</th>
+                <th>Count of students</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var group in GroupService.Groups)
+        {
+            <tr>
+                <td>@group.GroupNumber</td>
+                <td>@group.StartDate</td>
+                <td>@group.EndDate</td>
+                <td>@group.Description</td>
+                <td>@group.Category.Name</td>
+                <td>
+                    @if (group.Employee == null)
+                    {
+                        <span>No assigned employee</span>
+                    }
+                    else
+                    {
+                        <span>@group.Employee.Surname @group.Employee.Name @group.Employee.ThirdName</span>
+                    }
+                </td>
+                <td>
+                    @if (group.Students.Count > 0)
+                    {
+                        <span>@group.Students.Count</span>
+                    }
+                    else
+                    {
+                        <span>No students</span>
+                    }
+                </td>
+                <td>
+                    <a href="/group/@group.Id">Details</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <a href="group/add" class="btn btn-success">
+        <i class="oi oi-plus"></i> Add Group
+    </a>
+}
+
+@code {
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await GroupService.GetGroups();
+    }
+
+}

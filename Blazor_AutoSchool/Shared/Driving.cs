@@ -10,7 +10,6 @@ public class Driving
     public string StartPoint { get; set; } = String.Empty;
     public string EndPoint { get; set; } = String.Empty;
     
-    [JsonIgnore]
-    public Student? Student { get; set; }
+    public Student Student { get; set; }
     public int StudentId { get; set; }
 }

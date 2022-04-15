@@ -22,9 +22,64 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Group>()
+            .HasMany(g => g.Students)
+            .WithOne(s => s.Group)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Group>()
+            .HasMany(g => g.Schedules)
+            .WithOne(s => s.Group)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Employee>()
+            .HasMany(e => e.Autos)
+            .WithOne(a => a.Employee)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Employee>()
+            .HasMany(e => e.Groups)
+            .WithOne(g => g.Employee)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Auto>()
+            .HasMany(a => a.Students)
+            .WithOne(s => s.Auto)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Category>()
+            .HasMany(c => c.Groups)
+            .WithOne(g => g.Category)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Category>()
+            .HasMany(c => c.Topics)
+            .WithOne(t => t.Category)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<Student>()
-            .HasOne(e => e.Group)
-            .WithMany()
+            .HasMany(s => s.Drivings)
+            .WithOne(d => d.Student)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Student>()
+            .HasMany(s => s.Tests)
+            .WithOne(t => t.Student)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Student>()
+            .HasMany(s => s.Lessons)
+            .WithOne(s => s.Student)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Topic>()
+            .HasMany(t => t.Lessons)
+            .WithOne(l => l.Topic)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Topic>()
+            .HasMany(t => t.Tests)
+            .WithOne(t => t.Topic)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Employee>().HasData(
@@ -86,7 +141,24 @@ public class DataContext : DbContext
                 EndDate = new DateTime(2022, 04, 01),
                 Description = "Example text.",
                 EmployeeId = 1,
-                CategoryId = 2
+                CategoryId = 2 
+            }
+        );
+
+        modelBuilder.Entity<Student>().HasData(
+            new Student
+            {
+                Id = 1,
+                Surname = "Collins",
+                Name = "Edward",
+                ThirdName = "Smith",
+                Birthday = new DateTime(1990, 10, 12),
+                Address = "One Apple Park Way, Cupertino, CA 95014",
+                Passport = "85214796",
+                Contact = "1-841-853-7485",
+                MedicalInfo = true,
+                AutoId = 1,
+                GroupId = 1
             }
         );
     }

@@ -15,7 +15,6 @@ public class Auto
 
     public List<Student> Students { get; set; } = new List<Student>();
     
-    [JsonIgnore]
     public Employee? Employee { get; set; }
-    public int EmployeeId { get; set; }
+    public int? EmployeeId { get; set; }
 }
