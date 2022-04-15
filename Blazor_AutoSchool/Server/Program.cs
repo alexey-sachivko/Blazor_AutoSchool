@@ -5,6 +5,7 @@ global using Blazor_AutoSchool.Server.Services.EmployeeService;
 global using Blazor_AutoSchool.Server.Services.AutoService;
 global using Blazor_AutoSchool.Server.Services.AuthService;
 global using Blazor_AutoSchool.Server.Services.GroupService;
+global using Blazor_AutoSchool.Server.Services.CategoryService;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAutoService, AutoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
