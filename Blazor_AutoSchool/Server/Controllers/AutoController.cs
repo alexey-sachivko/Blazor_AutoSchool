@@ -28,6 +28,30 @@ namespace Blazor_AutoSchool.Server.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<Auto>>> CreateAuto(Auto auto)
+        {
+            var result = await _autoService.CreateAuto(auto);
+
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<Auto>>> UpdateAuto(Auto auto)
+        {
+            var result = await _autoService.UpdateAuto(auto);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<ServiceResponse<bool>>> DeleteAuto(int id)
+        {
+            var result = await _autoService.DeleteAuto(id);
+
+            return Ok(result);
+        }
     }
 }
     

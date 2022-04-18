@@ -40,4 +40,63 @@ public class AutoService : IAutoService
 
         return response;
     }
+
+    public async Task<ServiceResponse<Auto>> CreateAuto(Auto auto)
+    {
+        _context.Autos.Add(auto);
+        await _context.SaveChangesAsync();
+
+        return new ServiceResponse<Auto>()
+        {
+            Data = auto
+        };
+    }
+
+    public async Task<ServiceResponse<Auto>> UpdateAuto(Auto auto)
+    {
+        var dbAuto = await _context.Autos.FindAsync(auto.Id);
+        if (dbAuto == null)
+        {
+            return new ServiceResponse<Auto>()
+            {
+                Success = false,
+                Message = "Auto not found."
+            };
+        }
+
+        dbAuto.Brand = auto.Brand;
+        dbAuto.Model = auto.Model;
+        dbAuto.Color = auto.Color;
+        dbAuto.RegistrationNumber = auto.RegistrationNumber;
+        dbAuto.YearOfManufacture = auto.YearOfManufacture;
+        dbAuto.Type = auto.Type;
+        dbAuto.Status = auto.Status;
+        dbAuto.EmployeeId = auto.EmployeeId;
+
+        await _context.SaveChangesAsync();
+
+        return new ServiceResponse<Auto>()
+        {
+            Data = auto
+        };
+    }
+
+    public async Task<ServiceResponse<bool>> DeleteAuto(int autoId)
+    {
+        var dbAuto = await _context.Autos.FindAsync(autoId);
+        if (dbAuto == null)
+        {
+            return new ServiceResponse<bool>
+            {
+                Success = false,
+                Data = false,
+                Message = "Auto not found."
+            };
+        }
+
+        _context.Autos.Remove(dbAuto);
+        await _context.SaveChangesAsync();
+        
+        return new ServiceResponse<bool> { Data = true };
+    }
 }
